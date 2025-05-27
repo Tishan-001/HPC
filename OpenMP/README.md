@@ -49,7 +49,7 @@ Programmers can parallelize code incrementally, adding directives to serial prog
 ### Portability
 The API is standardized and supported on most major platforms, including Unix/Linux and Windows.
 
-## What OpenMP Is NOT:
+## What OpenMP Is NOT
 
 It's not perfect, and the programmer still has responsibilities:
 
@@ -69,3 +69,18 @@ It's not perfect, and the programmer still has responsibilities:
 | Lean and Mean   | Originally designed to use just a few simple directives (3–4). |
 | Ease of Use     | Allows gradual (incremental) parallelization of existing code. |
 | Portability     | Works with C/C++ and Fortran on many OSes (Unix, Linux, Windows). |
+
+# How to Enable OpenMP in Your Compiler
+
+To use OpenMP, you must pass a special flag to the compiler during compilation. Here are the flags for each major compiler:
+
+| Compiler | Platform       | Command Example       | OpenMP Flag   |
+|----------|----------------|-----------------------|---------------|
+| Intel    | Linux          | icc, icpc, ifort      | `-qopenmp`    |
+| PGI      | Linux          | pgcc, pgf77, pgf90    | `-mp`         |
+| GNU      | Linux / IBM BlueGene | gcc, g++, gfortran | `-fopenmp`    |
+| IBM XL*  | Coral Systems  | xlc_r, xlf_r (must end in _r for thread-safe) | `-qsmp=omp` |
+
+## Example (C code using GCC):
+```bash
+gcc -fopenmp myprogram.c -o myprogram
