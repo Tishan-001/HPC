@@ -122,18 +122,14 @@ Modern computers have **multiple cores**, so we can run parts of a program at th
 
 To benefit from Pthreads, your program should have **independent tasks** that can run **concurrently** (at the same time).
 
----
-
 ## ✅ Good Use Cases for Threads
 
 Threads are useful when your program:
 
-- ⏳ Waits for long I/O (like reading files or waiting for user input)
-- 🧠 Uses a lot of CPU in some parts
-- 🔔 Needs to handle **unexpected events** (like incoming messages)
-- 🚨 Has **high-priority work** that must be done immediately
-
----
+- Waits for long I/O (like reading files or waiting for user input)
+- Uses a lot of CPU in some parts
+- Needs to handle **unexpected events** (like incoming messages)
+- Has **high-priority work** that must be done immediately
 
 ## Common Threading Models
 
@@ -150,15 +146,11 @@ Threads are useful when your program:
 3. **Peer**  
    - All threads (including the creator) do the work together.
 
----
-
 ## Shared Memory Model
 
 - All threads **share the same global memory**.
 - But each thread also has its **own private data**.
 - You (the programmer) must **protect shared memory** to avoid problems.
-
----
 
 ## Thread-Safeness
 
@@ -166,8 +158,6 @@ Threads are useful when your program:
 - If you're unsure whether a function is thread-safe:
   - ❌ **Do not use it from multiple threads at the same time**
   - ✅ Use a lock or **"serialize"** the calls (one thread at a time)
-
----
 
 ## Thread Limits
 
@@ -177,5 +167,3 @@ Threads are useful when your program:
 - A program that works on one system may fail on another due to these differences.
 
 > 🔍 Tip: Always test your threaded program on your actual target system.
-
----
