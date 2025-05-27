@@ -48,3 +48,24 @@ Programmers can parallelize code incrementally, adding directives to serial prog
 
 ### Portability
 The API is standardized and supported on most major platforms, including Unix/Linux and Windows.
+
+## What OpenMP Is NOT:
+
+It's not perfect, and the programmer still has responsibilities:
+
+- **Different vendors** may implement it differently.
+- **Doesn't guarantee optimal performance** - you still need to optimize your code.
+- **Doesn't automatically check for**:
+  - Data races
+  - Deadlocks
+  - Invalid code
+- **Doesn't handle file I/O synchronization** - you must manage it yourself.
+
+## Goals of OpenMP
+
+| Goal            | Description |
+|-----------------|------------|
+| Standardization | A common way to write parallel code across many platforms. |
+| Lean and Mean   | Originally designed to use just a few simple directives (3–4). |
+| Ease of Use     | Allows gradual (incremental) parallelization of existing code. |
+| Portability     | Works with C/C++ and Fortran on many OSes (Unix, Linux, Windows). |
