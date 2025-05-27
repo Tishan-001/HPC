@@ -229,3 +229,9 @@ Pthreads functions are grouped by what they do:
 - Always include `#include <pthread.h>` when using Pthreads.
 
 > 🧠 Tip: Start with basic thread creation and mutex locking, then explore condition variables and barriers as needed.
+
+## Compiling Threaded Programs
+
+Several examples of commands used to compile code that uses pthreads are listed in the table below.
+
+![Compilling Table](images/compilling_table.png)
