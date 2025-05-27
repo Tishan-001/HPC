@@ -49,9 +49,8 @@
 | `barrier`  | Synchronizes all threads at a point |
 | `atomic`   | Ensures atomic memory update |
 
-## Example Usage
-
-### Parallel Region
+**Example Usage:**
+## Parallel Region
 ```c
 #include <omp.h>
 #include <stdio.h>
@@ -64,7 +63,14 @@ int main() {
     return 0;
 }
 ```
-# OpenMP Key Clauses
+## Parallel For Loop
+```c
+#pragma omp parallel for private(i)  
+for (i = 0; i < N; i++) {  
+	a[i] = b[i] + c[i];  
+} 
+```
+## OpenMP Key Clauses
 
 ## 4. Key Clauses
 
@@ -77,7 +83,7 @@ int main() {
 | `num_threads(N)` | Specifies the number of threads |
 | `schedule(static/dynamic/guided)` | Controls loop iteration distribution |
 
-## Example with Clauses
+**Example with Clauses:**
 
 ```c
 #include <omp.h>
