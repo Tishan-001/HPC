@@ -72,6 +72,7 @@ status: Optional value to return.
 ![Compilation example for tcsh and csh shells](images/tcsh_csh.png)
 
 Once created, threads are peers, and may create other threads. There is no implied hierarchy or dependency between threads.
+
 ![Compilling Table](images/thread_nodes.png)
 
 ## Thread Attributes
