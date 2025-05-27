@@ -14,7 +14,7 @@
 | `[clause, ...]` | Optional modifiers (e.g., `private(x)`, `shared(y)`, `reduction(+:sum)`) |
 | `newline`     | Mandatory before the structured block |
 
-## Example:
+**Example:**
 ```c
 #pragma omp parallel default(shared) private(beta, pi)
 {
@@ -50,7 +50,7 @@
 | `atomic`   | Ensures atomic memory update |
 
 **Example Usage:**
-## Parallel Region
+### Parallel Region
 ```c
 #include <omp.h>
 #include <stdio.h>
@@ -63,7 +63,7 @@ int main() {
     return 0;
 }
 ```
-## Parallel For Loop
+### Parallel For Loop
 ```c
 #pragma omp parallel for private(i)  
 for (i = 0; i < N; i++) {  
