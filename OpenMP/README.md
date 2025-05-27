@@ -14,9 +14,9 @@ OpenMP consists of three primary API components:
 
 ## Key Features and Programming Model
 
+### Fork-Join Model
 ![Fork-Join Model](images/fork_join.png)
 
-### Fork-Join Model
 This is the core model of how OpenMP runs your code. The master thread forks additional threads at the start of a parallel region; all threads join back at the end.
 
 **Process:**
