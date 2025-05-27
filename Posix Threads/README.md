@@ -84,16 +84,12 @@ Threads are **more lightweight** compared to processes. They require **less over
 
 > ✅ **Conclusion**: `pthread_create()` is significantly faster than `fork()`.
 
----
-
 ## 2. Efficient Communication & Data Exchange
 
 - **Threads share memory** within a process, allowing **zero-copy data exchange** via pointers.
 - **MPI** (used in HPC) requires memory copies even in shared memory mode.
 - **Pthreads** eliminate this need, providing **higher efficiency**, especially on-node.
 - Worst-case: communication reduced to **cache-to-CPU/memory-to-CPU bandwidth**, which is still faster than MPI shared memory.
-
----
 
 ## 3. Additional Benefits of Threading
 
@@ -105,8 +101,6 @@ Threads are **more lightweight** compared to processes. They require **less over
 
 - **Asynchronous Event Handling**:
   - Threads allow efficient **handling of unpredictable events**.
-
----
 
 ## 4. Real-world Examples
 
@@ -131,6 +125,8 @@ Threads are useful when your program:
 - Needs to handle **unexpected events** (like incoming messages)
 - Has **high-priority work** that must be done immediately
 
+![Parallel Programming](images/parallel_programming.png)
+
 ## Common Threading Models
 
 1. **Manager/Worker**  
@@ -152,6 +148,8 @@ Threads are useful when your program:
 - But each thread also has its **own private data**.
 - You (the programmer) must **protect shared memory** to avoid problems.
 
+![Shared Memory](images/shared_memory.png)
+
 ## Thread-Safeness
 
 - Some functions or libraries are **not thread-safe** (they don’t work properly if used by many threads at once).
@@ -165,5 +163,7 @@ Threads are useful when your program:
   - Max number of threads
   - Default stack size per thread
 - A program that works on one system may fail on another due to these differences.
+
+![Shared Memory](images/thread_safeness.png)
 
 > 🔍 Tip: Always test your threaded program on your actual target system.
