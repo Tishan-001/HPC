@@ -167,3 +167,65 @@ Threads are useful when your program:
 ![Shared Memory](images/thread_safeness.png)
 
 > 🔍 Tip: Always test your threaded program on your actual target system.
+
+
+# The Pthreads API – Beginner's Guide
+
+## What is Pthreads?
+
+- **Pthreads** stands for **POSIX Threads**.
+- It is defined by the **POSIX 1003.1 standard** (from IEEE/ANSI).
+- Pthreads allow **parallel programming** using threads in C/C++.
+- The **header file** `pthread.h` must be included to use Pthreads.
+
+## Four Main Groups of Pthreads Functions
+
+Pthreads functions are grouped by what they do:
+
+### 1. **Thread Management**
+- Create, join, or detach threads
+- Set or get thread attributes (like joinable, priority, etc.)
+- Functions start with: `pthread_` or `pthread_attr_`
+
+### 2. **Mutexes (Mutual Exclusion)**
+- Used to **protect shared data**
+- Lock or unlock mutexes
+- Functions: `pthread_mutex_`, `pthread_mutexattr_`
+
+### 3. **Condition Variables**
+- Help threads **communicate** when using a shared mutex
+- Wait or signal based on conditions
+- Functions: `pthread_cond_`, `pthread_condattr_`
+
+### 4. **Synchronization Tools**
+- Includes **read/write locks** and **barriers**
+- Helps multiple threads work together safely
+- Functions: `pthread_rwlock_`, `pthread_barrier_`
+
+## Naming Conventions
+
+| Prefix                | Purpose                            |
+|-----------------------|------------------------------------|
+| `pthread_`            | Thread functions and misc tools    |
+| `pthread_attr_`       | Thread attribute settings          |
+| `pthread_mutex_`      | Mutex handling                     |
+| `pthread_mutexattr_`  | Mutex attribute settings           |
+| `pthread_cond_`       | Condition variables                |
+| `pthread_condattr_`   | Condition variable attributes      |
+| `pthread_key_`        | Thread-specific data keys          |
+| `pthread_rwlock_`     | Read/write locks                   |
+| `pthread_barrier_`    | Barriers for synchronization       |
+
+## Opaque Objects
+
+- Many Pthreads functions work with **opaque objects**:
+  - These are special data structures that you don’t see inside.
+  - You use **attribute functions** to change how they behave.
+
+## Portability
+
+- Pthreads is designed for the **C language**.
+- Fortran programmers can call Pthreads using **C wrappers**.
+- Always include `#include <pthread.h>` when using Pthreads.
+
+> 🧠 Tip: Start with basic thread creation and mutex locking, then explore condition variables and barriers as needed.
