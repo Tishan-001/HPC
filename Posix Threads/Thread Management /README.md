@@ -125,3 +125,66 @@ int main() {
     pthread_exit(NULL);  // Keeps main alive until other threads finish
 }
 ```
+
+# Passing Arguments to Threads in Pthreads
+
+## Basic Concept
+- `pthread_create()` only supports **one argument** passed to the thread's function.
+- This argument must be passed **by reference** and cast to `(void *)`.
+
+### What if you need multiple arguments?
+- Combine the values into a `struct`.
+- Pass a **pointer to the struct**.
+- Inside the thread function, cast it back to the original struct type.
+
+### Example
+```c
+#include <pthread.h>
+#include <stdio.h>
+
+typedef struct {
+    int id;
+    char *message;
+} ThreadArgs;
+
+void *printMessage(void *arg) {
+    ThreadArgs *args = (ThreadArgs *)arg;
+    printf("Thread %d says: %s\n", args->id, args->message);
+    return NULL;
+}
+
+int main() {
+    pthread_t tid;
+    ThreadArgs args = {1, "Hello from thread!"};
+    
+    pthread_create(&tid, NULL, printMessage, (void *)&args);
+    pthread_exit(NULL);  // Wait for the thread to finish
+}
+```
+## ❓ Question: How to Safely Pass Data to Threads?
+
+### ⚠️ Problem
+
+Threads can start executing at **any time**, so if you:
+- Pass the **address of a local variable** that gets modified,
+- Or **reuse a single struct** for multiple threads,
+
+You might get **unexpected behavior**, because threads may access **outdated or overwritten** data.
+
+### ✅ Safe Approaches
+
+- **Use separate structs for each thread**  
+  Allocate a **unique struct per thread** to avoid shared data issues.
+
+- **Dynamically allocate memory for each thread**  
+  Use `malloc()` to allocate memory for each thread’s data.  
+  ✅ Remember to `free()` it inside the thread function when it's no longer needed.
+
+```c
+ThreadArgs *args = malloc(sizeof(ThreadArgs));
+args->id = 1;
+args->message = "Safe thread data!";
+pthread_create(&tid, NULL, threadFunction, (void *)args);
+```
+- **Avoid modifying the argument after creating the thread**  
+  If you pass the address of a global or shared variable, don't change it until the thread finishes using it.
