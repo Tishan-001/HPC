@@ -63,10 +63,10 @@ status: Optional value to return.
 ✅ Tip:
     On Linux, you can check and change these limits using ulimit or getrlimit/setrlimit.
 
-**bash/ksh/sh example**
+- **bash/ksh/sh example**
 ![Compilling Table](images/ksh_sh.png)
 
-**tcsh/csh example**
+- **tcsh/csh example**
 ![Compilling Table](images/tcsh_csh.png)
 
 Once created, threads are peers, and may create other threads. There is no implied hierarchy or dependency between threads.
