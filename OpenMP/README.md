@@ -37,8 +37,14 @@ Can be implemented on both:
 - **UMA (Uniform Memory Access)**: Equal memory access speed for all CPUs.
 - **NUMA (Non-Uniform Memory Access)**: Access time depends on memory location relative to the CPU.
 
-### Other Key Features
-- **Work Sharing**: OpenMP provides constructs to divide tasks among threads (e.g., `for`, `sections`, `single`, `master`).
-- **Synchronization**: Mechanisms like barriers, critical sections, and atomic operations are provided to coordinate threads and avoid race conditions.
-- **Incremental Parallelization**: Programmers can parallelize code incrementally, adding directives to serial programs as needed.
-- **Portability**: The API is standardized and supported on most major platforms, including Unix/Linux and Windows.
+### Work Sharing
+OpenMP provides constructs to divide tasks among threads (e.g., `for`, `sections`, `single`, `master`).
+
+### Synchronization
+Mechanisms like barriers, critical sections, and atomic operations are provided to coordinate threads and avoid race conditions.
+
+### Incremental Parallelization
+Programmers can parallelize code incrementally, adding directives to serial programs as needed.
+
+### Portability
+The API is standardized and supported on most major platforms, including Unix/Linux and Windows.
