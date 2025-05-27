@@ -70,7 +70,7 @@ It's not perfect, and the programmer still has responsibilities:
 | Ease of Use     | Allows gradual (incremental) parallelization of existing code. |
 | Portability     | Works with C/C++ and Fortran on many OSes (Unix, Linux, Windows). |
 
-# How to Enable OpenMP in Your Compiler
+## How to Enable OpenMP in Your Compiler
 
 To use OpenMP, you must pass a special flag to the compiler during compilation. Here are the flags for each major compiler:
 
