@@ -188,3 +188,60 @@ pthread_create(&tid, NULL, threadFunction, (void *)args);
 ```
 - **Avoid modifying the argument after creating the thread**  
   If you pass the address of a global or shared variable, don't change it until the thread finishes using it.
+
+
+# Joining and Detaching Threads (Pthreads)
+
+### Routines:
+
+```c
+pthread_join(thread, status)
+
+pthread_detach(thread)
+
+pthread_attr_setdetachstate(attr, detachstate)
+
+pthread_attr_getdetachstate(attr)
+```
+## pthread_join()
+
+- Used to **wait for a thread to finish**.
+- It **blocks the calling thread** until the specified thread ends.
+- Can retrieve the **exit status** of the thread (if given using `pthread_exit()`).
+
+![Thread Join](images/thread_join.png)
+
+### Important:
+- A thread can be **joined only once**.
+- Trying to join a thread **multiple times = logical error**.
+
+## Joinable vs Detached Threads
+
+### Joinable Thread:
+- Can be joined using `pthread_join()`.
+- Default behavior (but not guaranteed in all systems).
+- Use when you want to wait for the thread to finish.
+
+### Detached Thread:
+- **Cannot be joined**.
+- Resources are **automatically cleaned up** when thread ends.
+- Use when **you don’t need** to wait for the thread.
+
+
+## Making a Thread Detached (4-step process)
+
+```c
+pthread_attr_t attr;
+pthread_attr_init(&attr);                          // 1. Init
+pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED); // 2. Set as detached
+pthread_create(&thread, &attr, function, arg);     // 3. Create thread with attr
+pthread_attr_destroy(&attr);                       // 4. Clean up
+```
+
+## Detach a Thread After Creation
+```c
+pthread_detach(pthread_self());  // Detach current thread
+```
+- Only use if thread was created as joinable and you now want to detach it.
+
+- ⚠️ There's no way to reverse detachment.
