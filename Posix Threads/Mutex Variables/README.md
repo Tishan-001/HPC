@@ -36,6 +36,16 @@
 
 # Creating and Destroying Mutexes
 
+Routines:
+
+`pthread_mutex_init(mutex, attr)`
+
+`pthread_mutex_destroy(mutex)`
+
+`pthread_mutexattr_init(attr)`
+
+`pthread_mutexattr_destroy(attr)`
+
 ## 📌 What is a Mutex?
 A **mutex** (mutual exclusion) is a lock used to **protect shared resources** from concurrent access by multiple threads.
 
@@ -76,3 +86,78 @@ If you used custom attributes:
 pthread_mutexattr_destroy(&attr);
 ```
 Destroying cleans up resources and is good practice.
+
+# Locking and Unlocking Mutexes
+
+Routines:
+
+`pthread_mutex_lock(mutex)`
+
+`pthread_mutex_trylock(mutex)`
+
+`pthread_mutex_unlock(mutex)`
+
+## Purpose:
+Mutexes are used to protect **shared data** from being accessed by multiple threads at the same time. Only one thread can **own (lock)** a mutex at a time.
+
+## Main Routines:
+
+### 🔒 1. Locking a Mutex
+```c
+pthread_mutex_lock(&mutex);
+```
+- If the mutex is already locked, the calling thread waits (blocks) until it becomes available.
+- Once acquired, the thread owns the mutex.
+
+### 🏃 2. Try Locking a Mutex
+```c
+pthread_mutex_trylock(&mutex);
+```
+- Non-blocking version.
+- If the mutex is already locked:
+    - Returns immediately with an error (EBUSY).
+- Useful to avoid deadlocks.
+
+### 🔓 3. Unlocking a Mutex
+```c
+pthread_mutex_unlock(&mutex);
+```
+- Releases the mutex.
+- Only the owning thread can unlock.
+- Error returned if:
+    - The mutex is already unlocked.
+    - It is owned by another thread.
+
+### ⚠️ Important Notes:
+
+- Mutexes are like a “gentleman’s agreement” between threads: there’s no automatic enforcement.
+- The programmer must ensure that:
+    - Threads lock before accessing shared data.
+    - Threads unlock when done.
+
+### 🧪 Example Error Scenario:
+
+| Thread 1 | Thread 2  | Thread 3   |
+| -------- | --------- | ---------- |
+| Lock     |           |            |
+| A = 2    |           |            |
+| Unlock   |           |            |
+|          | Lock      |            |
+|          | A = A + 1 |            |
+|          | Unlock    |            |
+|          |           | A = A \* B |
+
+✅ If Thread 3 accesses A without locking, it can cause race conditions.
+
+### ❓ Common Question:
+
+Q: When more than one thread is waiting for a locked mutex, which one gets it first when released?
+
+🅰️ Answer:
+
+This is implementation-dependent. POSIX does not guarantee any specific order (like FIFO). It could be:
+- First-come, first-served
+- Priority-based
+- Random
+
+So don’t rely on a specific order. Always design for safety, not assumptions.
