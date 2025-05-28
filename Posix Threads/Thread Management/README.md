@@ -245,3 +245,102 @@ pthread_detach(pthread_self());  // Detach current thread
 - Only use if thread was created as joinable and you now want to detach it.
 
 - ⚠️ There's no way to reverse detachment.
+
+
+# Stack Management in POSIX Threads
+
+## What is the Thread Stack?
+
+Each thread in a program gets its own **stack memory** for:
+- Local variables
+- Function calls
+
+If the stack is too small, it can cause:
+- Program crashes  
+- Corrupted data
+
+## ⚠️ Problem: Stack Size is Not Fixed
+
+- **POSIX** does **not define a default stack size**
+- Default stack size depends on:
+  - The system (e.g., Linux, macOS)
+  - The number of threads
+- Default size may be **too small** for deep recursion or large local arrays
+
+## Safe Stack Management
+
+### Set Stack Size Manually
+
+Use `pthread_attr_setstacksize()` to define a safe, custom stack size:
+
+```c
+pthread_attr_t attr;
+pthread_attr_init(&attr);
+pthread_attr_setstacksize(&attr, desired_size_in_bytes);
+```
+## Setting Stack Address (Advanced Use)
+
+- In special systems, threads may need their **stack memory in a specific region**.
+- POSIX provides two routines for this purpose:
+
+### Functions
+
+```c
+int pthread_attr_setstackaddr(pthread_attr_t *attr, void *stackaddr);
+int pthread_attr_getstackaddr(pthread_attr_t *attr, void **stackaddr);
+```
+- pthread_attr_setstackaddr() — manually sets the start address of the thread stack.
+- pthread_attr_getstackaddr() — gets the current stack address from attributes.
+
+### ⚠️ Note: This is an advanced feature. Use only when:
+
+- Required by system-specific constraints.
+- Working on embedded systems or low-level memory-tuned applications.
+
+### 🖥️ Practical Notes from Livermore Computing (LC)
+
+![LC Table](images/lc_table.png)
+
+# Miscellaneous Routines
+
+## 🔹 `pthread_self()`
+- Returns the **unique thread ID** of the calling thread.
+- Useful when a thread wants to identify itself.
+
+```c
+pthread_t tid = pthread_self();
+```
+
+## 🔹 `pthread_equal(thread1, thread2)`
+- Compares two thread IDs.
+- Returns:
+  - 0 if they are different
+  - Non-zero if they are equal
+
+- ✅ Do NOT use == to compare threads. Always use pthread_equal.
+
+```c
+if (pthread_equal(t1, t2)) {
+    printf("Same thread\n");
+}
+```
+## 🔹 Why `==` Should Not Be Used
+- Thread IDs are opaque — you can't see or compare their internal values directly.
+- Always use pthread_equal for safe comparison.
+
+## 🔹 `pthread_once(once_control, init_routine)`
+- Ensures that init_routine is executed only once, even if called by multiple threads.
+- Typically used for safe, one-time initialization.
+
+💡 How to Use
+```c
+pthread_once_t once_control = PTHREAD_ONCE_INIT;
+
+void init_function() {
+    // Initialization code
+}
+
+pthread_once(&once_control, init_function);
+```
+- ✅ Only the first thread runs init_function
+- 🚫 All other threads skip it
