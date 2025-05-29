@@ -108,7 +108,8 @@ int main() {
 ## 1. Key Concepts
 
 ### (1) Static (Lexical) Extent
-**Definition:** The code textually enclosed between the beginning and end of a structured block following a directive.  
+**Definition:** The code textually enclosed between the beginning and end of a structured block following a directive.
+
 **Characteristics:**  
 - Limited to the same function/routine where the directive appears.  
 - Does not span multiple files or function calls.  
